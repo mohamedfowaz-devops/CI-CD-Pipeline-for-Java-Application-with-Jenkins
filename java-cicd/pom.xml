@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.9.16</version>
+        <version>3.5.5</version>
         <relativePath/>
     </parent>
 
@@ -19,7 +19,7 @@
     <name>java-cicd-demo</name>
 
     <properties>
-        <java.version>27</java.version>
+        <java.version>21</java.version>
     </properties>
 
     <dependencies>
