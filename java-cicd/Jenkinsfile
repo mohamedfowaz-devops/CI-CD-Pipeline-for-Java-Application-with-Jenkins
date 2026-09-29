@@ -26,22 +26,26 @@ pipeline {
             }
         }
 
-        stage('Verify JAR') {
+    stage('Docker Build') {
             steps {
-                dir('java-cicd') {
-                    sh 'ls -lh target/'
-                }
+                sh 'docker build -t java-cicd-demo:${BUILD_NUMBER} .'
+            }
+        }
+
+        stage('Docker Image Check') {
+            steps {
+                sh 'docker images java-cicd-demo'
             }
         }
     }
 
     post {
         success {
-            echo 'Build completed successfully!'
+            echo 'Build and Docker image creation successful!'
         }
 
         failure {
-            echo 'Build failed. Check the failed stage.'
+            echo 'Pipeline failed. Check the failed stage.'
         }
     }
 }
