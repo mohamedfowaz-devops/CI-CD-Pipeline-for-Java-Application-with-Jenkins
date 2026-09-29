@@ -6,26 +6,31 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/mohamedfowaz-devops/CI-CD-Pipeline-for-Java-Application-with-Jenkins'
+                checkout scm
             }
         }
 
         stage('Maven Build') {
             steps {
-                sh 'mvn clean package'
+                dir('java-cicd') {
+                    sh 'mvn clean package'
+                }
             }
         }
 
         stage('Unit Tests') {
             steps {
-                sh 'mvn test'
+                dir('java-cicd') {
+                    sh 'mvn test'
+                }
             }
         }
 
         stage('Verify JAR') {
             steps {
-                sh 'ls -lh target/'
+                dir('java-cicd') {
+                    sh 'ls -lh target/'
+                }
             }
         }
     }
