@@ -1,0 +1,47 @@
+---
+- name: Deploy Java application
+  hosts: app_servers
+  become: yes
+
+  tasks:
+
+    - name: Install Java 21
+      apt:
+        name: openjdk-21-jre
+        state: present
+        update_cache: yes
+
+    - name: Create application directory
+      file:
+        path: /opt/java-cicd
+        state: directory
+        mode: '0755'
+
+    - name: Stop existing application
+      shell: |
+        pkill -f '/opt/java-cicd/app.jar' || true
+      failed_when: false
+
+    - name: Copy application JAR
+      copy:
+        src: /var/lib/jenkins/workspace/Java-CICD-Ansible/java-cicd/target/java-cicd-demo-1.0.0.jar
+        dest: /opt/java-cicd/app.jar
+        mode: '0755'
+
+    - name: Start application
+      shell: |
+        nohup java -jar /opt/java-cicd/app.jar > /opt/java-cicd/app.log 2>&1 &
+      args:
+        chdir: /opt/java-cicd
+
+    - name: Wait for application to start
+      wait_for:
+        port: 8080
+        host: 127.0.0.1
+        delay: 5
+        timeout: 30
+
+    - name: Check application health
+      uri:
+        url: http://127.0.0.1:8080/actuator/health
+        status_code: 200
