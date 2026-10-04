@@ -10,21 +10,15 @@ pipeline {
             }
         }
 
-        stage('Maven Build') {
-            steps {
-                dir('java-cicd') {
-                    sh 'mvn clean package'
-                }
-            }
+       stage('Build and Test') {
+    steps {
+        dir('java-cicd') {
+            sh 'mvn clean package'
+            sh 'mvn test'
+            sh 'mvn deploy'
         }
-
-        stage('Unit Tests') {
-            steps {
-                dir('java-cicd') {
-                    sh 'mvn test'
-                }
-            }
-        }
+    }
+}
 
     stage('Docker Build') {
             steps {
