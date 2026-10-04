@@ -34,6 +34,21 @@ pipeline {
                sh 'docker images java-cicd-demo:${BUILD_NUMBER}'
             }
         }
+        stage('Push to ECR') {
+    steps {
+        sh '''
+            aws ecr get-login-password --region us-west-2 | \
+            docker login --username AWS --password-stdin \
+            582600397550.dkr.ecr.us-west-2.amazonaws.com
+
+            docker tag java-cicd-demo:${BUILD_NUMBER} \
+            582600397550.dkr.ecr.us-west-2.amazonaws.com/java-cicd-demo:${BUILD_NUMBER}
+
+            docker push \
+            582600397550.dkr.ecr.us-west-2.amazonaws.com/java-cicd-demo:${BUILD_NUMBER}
+        '''
+    }
+}
     }
 
     post {
