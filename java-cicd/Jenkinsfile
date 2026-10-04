@@ -28,13 +28,15 @@ pipeline {
 
     stage('Docker Build') {
             steps {
-                sh 'docker build -t java-cicd-demo:${BUILD_NUMBER} .'
-            }
+        dir('java-cicd') {
+            sh 'docker build -t java-cicd-demo:${BUILD_NUMBER} .'
         }
+    }
+        
 
         stage('Docker Image Check') {
             steps {
-                sh 'docker images java-cicd-demo'
+               sh 'docker images java-cicd-demo:${BUILD_NUMBER}'
             }
         }
     }
