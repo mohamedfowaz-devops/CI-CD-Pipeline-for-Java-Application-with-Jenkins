@@ -32,6 +32,7 @@ pipeline {
             sh 'docker build -t java-cicd-demo:${BUILD_NUMBER} .'
         }
     }
+    }
         
 
         stage('Docker Image Check') {
