@@ -48,6 +48,15 @@ pipeline {
             582600397550.dkr.ecr.us-west-2.amazonaws.com/java-cicd-demo:${BUILD_NUMBER}
         '''
     }
+            stage('Deploy with Ansible') {
+    steps {
+        sh '''
+            ansible-playbook \
+            -i ansible/inventory \
+            ansible/deploy.yml
+        '''
+    }
+}
 }
     }
 
