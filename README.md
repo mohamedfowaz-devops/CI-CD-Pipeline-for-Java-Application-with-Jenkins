@@ -1,6 +1,8 @@
 # Java CI/CD Pipeline with Jenkins, Docker, AWS ECR and Ansible
 
 An end-to-end CI/CD pipeline for a Java (Spring Boot) application. Jenkins builds and tests the code with Maven, creates a versioned Docker image and pushes it to Amazon ECR, then uses Ansible to deploy the application JAR to two Ubuntu EC2 application servers and verify it with a health check.
+<img width="994" height="502" alt="image" src="https://github.com/user-attachments/assets/51a3fea9-b6e2-4781-acf3-990816c49f84" />
+
 
 ## Highlights
 
